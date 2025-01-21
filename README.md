@@ -1,4 +1,4 @@
-**Web4 Apps Specification**
+# Web4 Apps Specification
 
 Web4 applications combine the potential of decentralized technologies and AI. At the intersection of these two innovative technologies, a standard is needed to leverage their combined advantages.
 
