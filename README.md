@@ -4,6 +4,25 @@ Web4 applications combine the potential of decentralized technologies and AI. At
 
 The core idea of the Web4 application standard is to abstract away from specific blockchain implementations and programming languages. Applications are described using natural language, detailing use cases and testing methods. In turn, [LLM](https://en.wikipedia.org/wiki/Large_language_model) models generate the application's implementation in the required language and for a specific [DLT](https://en.wikipedia.org/wiki/Distributed_ledger). This makes the applications accessible to anyone, and their performance improves as LLMs and DLTs evolve.
 
+## Validator
+
+### `validate.ts`
+Contains a TypeScript function (`validateWeb4AppData`) that checks whether a JSON object follows the required Web4AppData structure. It verifies mandatory fields, optional fields, and length limits for strings. If validation fails, it throws an error specifying the problematic field.
+
+### `test.js`
+Demonstrates how to test the `validate.ts` file. It includes:
+- Valid data scenario (should pass)
+- Various invalid data scenarios (missing fields, string length issues, etc.) that should fail
+
+You can run the tests by installing TypeScript and ts-node locally in your project, then simply execute:
+```bash
+npm ci
+npm test
+```
+This will compile and run `test.js` (which imports `validate.ts`), showing whether each scenario passed or failed.
+
+## Web4 structure
+
 ```typescript
 /**
  * Web4AppData is the main interface for describing a universal web application
