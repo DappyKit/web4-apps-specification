@@ -4,6 +4,9 @@ Web4 applications combine the potential of decentralized technologies and AI. At
 
 The core idea of the Web4 application standard is to abstract away from specific blockchain implementations and programming languages. Applications are described using natural language, detailing use cases and testing methods. In turn, [LLM](https://en.wikipedia.org/wiki/Large_language_model) models generate the application's implementation in the required language and for a specific [DLT](https://en.wikipedia.org/wiki/Distributed_ledger). This makes the applications accessible to anyone, and their performance improves as LLMs and DLTs evolve.
 
+This format supports both regular web applications and also [Frames v2](https://docs.farcaster.xyz/developers/frames/v2/) from Farcaster.
+
+
 ## Validator
 
 ### `validate.ts`
