@@ -1,0 +1,16 @@
+{
+  "name": "web4-apps-specification",
+  "version": "1.0.0",
+  "description": "Web4 applications combine the potential of decentralized technologies and AI. At the intersection of these two innovative technologies, a standard is needed to leverage their combined advantages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node --project tsconfig.json test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
