@@ -1,0 +1,39 @@
+{
+  "productId": "PRD-123456",
+  "name": "Wireless Noise-Cancelling Headphones",
+  "description": "Premium wireless headphones with active noise cancellation, 30-hour battery life, and comfortable over-ear design.",
+  "price": 249.99,
+  "category": "electronics",
+  "images": [
+    {
+      "url": "https://example.com/images/headphones-1.jpg",
+      "alt": "Front view of wireless headphones",
+      "isPrimary": true
+    },
+    {
+      "url": "https://example.com/images/headphones-2.jpg",
+      "alt": "Side view of wireless headphones",
+      "isPrimary": false
+    }
+  ],
+  "specifications": {
+    "weight": 250,
+    "dimensions": {
+      "length": 18.5,
+      "width": 15.2,
+      "height": 8.7,
+      "unit": "cm"
+    }
+  },
+  "stock": 42,
+  "tags": [
+    "wireless",
+    "noise-cancelling",
+    "premium",
+    "audio"
+  ],
+  "ratings": {
+    "average": 4.7,
+    "count": 328
+  }
+} 

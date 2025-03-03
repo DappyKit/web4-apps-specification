@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "properties": {
+    "productId": {
+      "type": "string",
+      "pattern": "^PRD-[0-9]{6}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0.01
+    },
+    "category": {
+      "type": "string",
+      "enum": ["electronics", "clothing", "home", "beauty", "books", "sports", "other"]
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "url"
+          },
+          "alt": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "isPrimary": {
+            "type": "boolean"
+          }
+        },
+        "required": ["url", "alt"]
+      },
+      "minItems": 1,
+      "maxItems": 10
+    },
+    "specifications": {
+      "type": "object",
+      "properties": {
+        "weight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "number",
+              "minimum": 0
+            },
+            "width": {
+              "type": "number",
+              "minimum": 0
+            },
+            "height": {
+              "type": "number",
+              "minimum": 0
+            },
+            "unit": {
+              "type": "string",
+              "enum": ["cm", "in", "mm"]
+            }
+          },
+          "required": ["length", "width", "height", "unit"]
+        }
+      }
+    },
+    "stock": {
+      "type": "number",
+      "minimum": 0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 20
+      }
+    },
+    "ratings": {
+      "type": "object",
+      "properties": {
+        "average": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "count": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": ["average", "count"]
+    }
+  },
+  "required": ["productId", "name", "price", "category", "images", "stock"]
+} 

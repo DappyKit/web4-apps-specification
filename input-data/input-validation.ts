@@ -12,6 +12,7 @@ type JsonSchema = {
   minimum?: number;
   maximum?: number;
   enum?: string[];
+  pattern?: string;
   properties?: Record<string, JsonSchema>;
   items?: JsonSchema;
   required?: string[];
@@ -37,6 +38,12 @@ const createStringSchema = (schema: JsonSchema): z.ZodTypeAny => {
   }
   if (schema.format === 'email') {
     zodSchema = zodSchema.email();
+  }
+  if (schema.format === 'url') {
+    zodSchema = zodSchema.url();
+  }
+  if (schema.pattern) {
+    zodSchema = zodSchema.regex(new RegExp(schema.pattern));
   }
   
   return zodSchema;
