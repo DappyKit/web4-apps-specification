@@ -1,0 +1,41 @@
+{
+  "orderId": "ORD-12345678",
+  "customerId": "CUST-98765",
+  "orderDate": "2023-06-15T14:30:00Z",
+  "status": "processing",
+  "items": [
+    {
+      "productId": "PRD-123456",
+      "quantity": 1,
+      "price": 249.99
+    },
+    {
+      "productId": "PRD-789012",
+      "quantity": 2,
+      "price": 29.99
+    }
+  ],
+  "shipping": {
+    "address": {
+      "street": "123 Main Street",
+      "city": "Anytown",
+      "state": "California",
+      "zipCode": "91234",
+      "country": "United States"
+    },
+    "method": "express",
+    "cost": 15.99
+  },
+  "payment": {
+    "method": "credit_card",
+    "status": "completed"
+  },
+  "totals": {
+    "subtotal": 309.97,
+    "tax": 25.50,
+    "shippingCost": 15.99,
+    "discount": 10.00,
+    "total": 341.46
+  },
+  "notes": "Please leave package at the front door if no one answers."
+} 
