@@ -11,13 +11,33 @@ export const loadSchema = (schemaPath: string): z.ZodType => {
   const schemaContent = fs.readFileSync(schemaPath, 'utf-8');
   const schemaJson = JSON.parse(schemaContent);
   
-  if (schemaJson.type === 'array' && schemaJson.items?.type === 'string') {
-    const itemSchema = z.string()
-      .min(schemaJson.items.minLength)
-      .max(schemaJson.items.maxLength);
-    
-    return z.array(itemSchema)
-      .max(schemaJson.maxItems);
+  if (schemaJson.type === 'object') {
+    const stringSchema = (minLength: number, maxLength: number) =>
+      z.string().min(minLength).max(maxLength);
+
+    const questionSchema = z.object({
+      text: stringSchema(
+        schemaJson.properties.questions.items.properties.text.minLength,
+        schemaJson.properties.questions.items.properties.text.maxLength
+      ),
+      options: z.array(stringSchema(
+        schemaJson.properties.questions.items.properties.options.items.minLength,
+        schemaJson.properties.questions.items.properties.options.items.maxLength
+      ))
+        .length(schemaJson.properties.questions.items.properties.options.minItems)
+    });
+
+    return z.object({
+      name: stringSchema(
+        schemaJson.properties.name.minLength,
+        schemaJson.properties.name.maxLength
+      ),
+      description: stringSchema(
+        schemaJson.properties.description.minLength,
+        schemaJson.properties.description.maxLength
+      ),
+      questions: z.array(questionSchema)
+    });
   }
   
   throw new Error(`Invalid schema format: ${JSON.stringify(schemaJson)}`);
