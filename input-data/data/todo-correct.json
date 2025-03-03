@@ -1,0 +1,9 @@
+{
+  "id": "TODO-0001",
+  "title": "Complete project documentation",
+  "description": "Write comprehensive documentation for the new API endpoints and data models",
+  "status": "in_progress",
+  "priority": "high",
+  "completed": false,
+  "dueDate": "2023-07-25T17:00:00Z"
+} 

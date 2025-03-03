@@ -1,0 +1,110 @@
+{
+  "recipeId": "RCP-987654",
+  "title": "Classic Chocolate Chip Cookies",
+  "description": "Soft and chewy chocolate chip cookies with a golden edge and melty chocolate chunks",
+  "author": {
+    "name": "Chef Maria",
+    "email": "maria@bakingexample.com"
+  },
+  "prepTime": 15,
+  "cookTime": 12,
+  "totalTime": 27,
+  "servings": 24,
+  "difficulty": "easy",
+  "cuisine": "American",
+  "categories": ["dessert", "baking", "cookies"],
+  "ingredients": [
+    {
+      "name": "all-purpose flour",
+      "quantity": "2 1/4",
+      "unit": "cups"
+    },
+    {
+      "name": "baking soda",
+      "quantity": "1",
+      "unit": "tsp"
+    },
+    {
+      "name": "salt",
+      "quantity": "1",
+      "unit": "tsp"
+    },
+    {
+      "name": "unsalted butter",
+      "quantity": "1",
+      "unit": "cup",
+      "notes": "softened to room temperature"
+    },
+    {
+      "name": "granulated sugar",
+      "quantity": "3/4",
+      "unit": "cup"
+    },
+    {
+      "name": "brown sugar",
+      "quantity": "3/4",
+      "unit": "cup",
+      "notes": "packed"
+    },
+    {
+      "name": "vanilla extract",
+      "quantity": "1",
+      "unit": "tsp"
+    },
+    {
+      "name": "eggs",
+      "quantity": "2",
+      "unit": "large"
+    },
+    {
+      "name": "semi-sweet chocolate chips",
+      "quantity": "2",
+      "unit": "cups"
+    }
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "description": "Preheat oven to 375°F (190°C). Line baking sheets with parchment paper."
+    },
+    {
+      "number": 2,
+      "description": "In a small bowl, whisk together flour, baking soda, and salt. Set aside."
+    },
+    {
+      "number": 3,
+      "description": "In a large bowl, beat butter, granulated sugar, and brown sugar until creamy.",
+      "timers": [3]
+    },
+    {
+      "number": 4,
+      "description": "Add vanilla and eggs, one at a time, beating well after each addition."
+    },
+    {
+      "number": 5,
+      "description": "Gradually stir in flour mixture until just combined. Do not overmix."
+    },
+    {
+      "number": 6,
+      "description": "Fold in chocolate chips."
+    },
+    {
+      "number": 7,
+      "description": "Drop rounded tablespoons of dough onto prepared baking sheets, about 2 inches apart."
+    },
+    {
+      "number": 8,
+      "description": "Bake until golden brown, about 9-12 minutes. Let cool on baking sheet for 2 minutes, then transfer to wire racks to cool completely.",
+      "timers": [11, 2]
+    }
+  ],
+  "nutrition": {
+    "calories": 150,
+    "fat": 7,
+    "carbs": 19,
+    "protein": 2
+  },
+  "isVegetarian": true,
+  "isVegan": false,
+  "isGlutenFree": false
+} 

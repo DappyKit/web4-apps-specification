@@ -1,0 +1,179 @@
+{
+  "surveyId": "SRV-12345678",
+  "title": "Customer Satisfaction Survey",
+  "description": "Help us improve our products and services by providing your feedback in this short survey.",
+  "createdBy": "admin@example.com",
+  "createdAt": "2023-06-01T10:00:00Z",
+  "expiresAt": "2023-12-31T23:59:59Z",
+  "status": "active",
+  "settings": {
+    "allowAnonymous": true,
+    "requireLogin": false,
+    "allowMultipleSubmissions": false,
+    "showProgressBar": true,
+    "randomizeQuestions": false,
+    "confirmationMessage": "Thank you for completing our survey! Your feedback is greatly appreciated.",
+    "redirectUrl": "https://example.com/thank-you"
+  },
+  "sections": [
+    {
+      "sectionId": "general",
+      "title": "General Information",
+      "description": "Please tell us about yourself",
+      "order": 0,
+      "questions": [
+        {
+          "questionId": "age-group",
+          "type": "dropdown",
+          "text": "What age group do you belong to?",
+          "isRequired": true,
+          "order": 0,
+          "options": [
+            {
+              "optionId": "age-18-24",
+              "text": "18-24 years"
+            },
+            {
+              "optionId": "age-25-34",
+              "text": "25-34 years"
+            },
+            {
+              "optionId": "age-35-44",
+              "text": "35-44 years"
+            },
+            {
+              "optionId": "age-45-54",
+              "text": "45-54 years"
+            },
+            {
+              "optionId": "age-55-plus",
+              "text": "55 years and above"
+            }
+          ]
+        },
+        {
+          "questionId": "purchase-frequency",
+          "type": "multiplechoice",
+          "text": "How often do you purchase our products?",
+          "isRequired": true,
+          "order": 1,
+          "options": [
+            {
+              "optionId": "weekly",
+              "text": "Weekly"
+            },
+            {
+              "optionId": "monthly",
+              "text": "Monthly"
+            },
+            {
+              "optionId": "quarterly",
+              "text": "Every few months"
+            },
+            {
+              "optionId": "yearly",
+              "text": "Once a year or less"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "product-feedback",
+      "title": "Product Feedback",
+      "description": "Please rate our products and services",
+      "order": 1,
+      "questions": [
+        {
+          "questionId": "product-quality",
+          "type": "rating",
+          "text": "How would you rate the quality of our products?",
+          "description": "1 = Very poor, 5 = Excellent",
+          "isRequired": true,
+          "order": 0,
+          "validation": {
+            "min": 1,
+            "max": 5
+          }
+        },
+        {
+          "questionId": "improvement-suggestions",
+          "type": "textarea",
+          "text": "Do you have any suggestions on how we can improve our products?",
+          "isRequired": false,
+          "order": 1,
+          "validation": {
+            "maxLength": 500
+          }
+        },
+        {
+          "questionId": "feature-interest",
+          "type": "checkbox",
+          "text": "Which of the following features would you be interested in?",
+          "isRequired": true,
+          "order": 2,
+          "options": [
+            {
+              "optionId": "feature-1",
+              "text": "Mobile app integration"
+            },
+            {
+              "optionId": "feature-2",
+              "text": "AI-powered recommendations"
+            },
+            {
+              "optionId": "feature-3",
+              "text": "Enhanced reporting"
+            },
+            {
+              "optionId": "feature-4",
+              "text": "Social media sharing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "conditional-section",
+      "title": "Conditional Questions",
+      "order": 2,
+      "questions": [
+        {
+          "questionId": "has-contacted-support",
+          "type": "boolean",
+          "text": "Have you contacted our customer support in the last 30 days?",
+          "isRequired": true,
+          "order": 0
+        },
+        {
+          "questionId": "support-rating",
+          "type": "rating",
+          "text": "How would you rate your customer support experience?",
+          "isRequired": true,
+          "order": 1,
+          "validation": {
+            "min": 1,
+            "max": 5
+          },
+          "conditionalLogic": {
+            "dependsOn": "has-contacted-support",
+            "condition": "equals",
+            "value": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "audience": {
+    "type": "public",
+    "maxResponses": 1000
+  },
+  "statistics": {
+    "views": 450,
+    "starts": 320,
+    "completions": 275,
+    "abandonRate": 14.1,
+    "averageCompletionTime": 348
+  },
+  "tags": ["customer", "satisfaction", "feedback", "product"]
+} 

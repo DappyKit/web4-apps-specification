@@ -1,0 +1,116 @@
+{
+  "type": "object",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "pattern": "^EVT-[0-9]{6}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000
+    },
+    "category": {
+      "type": "string",
+      "enum": ["conference", "workshop", "webinar", "meetup", "social", "other"]
+    },
+    "startDate": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 30
+    },
+    "endDate": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 30
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100
+        },
+        "address": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "city": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50
+        },
+        "country": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "virtualLink": {
+          "type": "string",
+          "format": "url"
+        }
+      },
+      "required": ["name", "isVirtual"]
+    },
+    "organizer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 20
+        }
+      },
+      "required": ["name", "email"]
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["confirmed", "pending", "cancelled"]
+          }
+        },
+        "required": ["name", "email", "status"]
+      }
+    },
+    "maxAttendees": {
+      "type": "number",
+      "minimum": 1
+    },
+    "isPublic": {
+      "type": "boolean"
+    }
+  },
+  "required": ["eventId", "title", "description", "category", "startDate", "endDate", "location", "organizer", "isPublic"]
+} 
