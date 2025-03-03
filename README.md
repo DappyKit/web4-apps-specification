@@ -24,6 +24,87 @@ npm test
 ```
 This will compile and run `test.js` (which imports `validate.ts`), showing whether each scenario passed or failed.
 
+## Input Data Validation System
+
+The project includes a robust input data validation system that provides flexible schema validation for various types of input data. This system is essential for creating applications from templates, ensuring that all user-provided input meets the required specifications before processing.
+
+### How It Works
+
+The validation system converts JSON Schema definitions to Zod validation schemas, providing type-safe, runtime validation with detailed error messages. The main functionality is exposed through:
+
+```typescript
+validateInputData(data: unknown, schemaPath: string): boolean
+```
+
+This function validates input data against a schema defined in a JSON file and returns `true` if valid or throws a detailed error if invalid.
+
+### Available Schemas
+
+The system includes a variety of predefined schemas for common data structures:
+
+- **Contact**: Personal contact information with validation for email and phone formats
+- **Todo**: Task management data with status tracking and priorities
+- **Event**: Event planning data with location, datetime validation, and attendee tracking
+- **Recipe**: Detailed recipe format with ingredients, instructions, and nutritional information
+- **Survey**: Comprehensive survey builder with questions, sections, and response validation
+- **Product**: E-commerce product specifications with pricing and inventory
+- **Order**: Order processing data with line items and shipping information
+- **User Profile**: User account information with preferences and settings
+- **Quiz**: Question and answer format for educational applications
+- **Login**: Authentication credentials with security requirements
+
+### Example Usage
+
+Testing schema validation is straightforward:
+
+```typescript
+import { validateInputData } from './input-data/input-validation';
+import path from 'path';
+
+// Path to schema definition
+const schemaPath = path.join(__dirname, 'input-data', 'schemas', 'todo.json');
+
+// Sample data
+const todoData = {
+  "id": "TODO-0001",
+  "title": "Complete project documentation",
+  "description": "Write comprehensive documentation for the new API endpoints",
+  "status": "in_progress",
+  "priority": "high",
+  "completed": false,
+  "dueDate": "2023-07-25T17:00:00Z"
+};
+
+try {
+  const isValid = validateInputData(todoData, schemaPath);
+  console.log('Validation successful:', isValid);
+} catch (error) {
+  console.error('Validation failed:', error.errors);
+}
+```
+
+### Running Validation Tests
+
+The repository includes comprehensive tests for each schema:
+
+```bash
+npm run test:input
+```
+
+This will run validation tests for all schemas, confirming both positive cases (correct data) and negative cases (data with various validation errors).
+
+### Extending with New Schemas
+
+You can create custom schemas by adding new JSON schema files to the `input-data/schemas` directory. The validation system supports:
+
+- String validation (length, format, pattern, enumeration)
+- Number validation (min/max)
+- Boolean values
+- Arrays with item validation
+- Nested objects with required/optional fields
+
+Each schema in the repository comes with example data in the `input-data/data` directory, providing templates for your own implementations.
+
 ## Development
 
 ### Running Tests
