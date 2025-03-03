@@ -61,4 +61,4 @@
     }
   },
   "required": ["username", "fullName", "age", "privacySettings"]
-} 
+}

@@ -131,5 +131,14 @@
       "maxLength": 500
     }
   },
-  "required": ["orderId", "customerId", "orderDate", "status", "items", "shipping", "payment", "totals"]
-} 
+  "required": [
+    "orderId",
+    "customerId",
+    "orderDate",
+    "status",
+    "items",
+    "shipping",
+    "payment",
+    "totals"
+  ]
+}

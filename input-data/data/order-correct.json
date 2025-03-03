@@ -32,10 +32,10 @@
   },
   "totals": {
     "subtotal": 309.97,
-    "tax": 25.50,
+    "tax": 25.5,
     "shippingCost": 15.99,
-    "discount": 10.00,
+    "discount": 10.0,
     "total": 341.46
   },
   "notes": "Please leave package at the front door if no one answers."
-} 
+}

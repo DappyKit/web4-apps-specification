@@ -112,5 +112,15 @@
       "type": "boolean"
     }
   },
-  "required": ["eventId", "title", "description", "category", "startDate", "endDate", "location", "organizer", "isPublic"]
-} 
+  "required": [
+    "eventId",
+    "title",
+    "description",
+    "category",
+    "startDate",
+    "endDate",
+    "location",
+    "organizer",
+    "isPublic"
+  ]
+}

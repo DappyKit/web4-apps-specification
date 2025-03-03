@@ -7,13 +7,9 @@
     "country": "United States",
     "city": "Seattle"
   },
-  "interests": [
-    "programming",
-    "hiking",
-    "photography"
-  ],
+  "interests": ["programming", "hiking", "photography"],
   "privacySettings": {
     "profileVisibility": "friends",
     "showAge": true
   }
-} 
+}

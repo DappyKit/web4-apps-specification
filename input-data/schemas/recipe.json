@@ -150,5 +150,15 @@
       "type": "boolean"
     }
   },
-  "required": ["recipeId", "title", "description", "prepTime", "cookTime", "totalTime", "servings", "ingredients", "steps"]
-} 
+  "required": [
+    "recipeId",
+    "title",
+    "description",
+    "prepTime",
+    "cookTime",
+    "totalTime",
+    "servings",
+    "ingredients",
+    "steps"
+  ]
+}

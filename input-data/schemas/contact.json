@@ -28,4 +28,4 @@
     }
   },
   "required": ["firstName", "lastName", "email"]
-} 
+}

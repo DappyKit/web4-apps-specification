@@ -97,7 +97,19 @@
                 },
                 "type": {
                   "type": "string",
-                  "enum": ["text", "textarea", "multiplechoice", "checkbox", "dropdown", "rating", "date", "email", "number", "file", "boolean"]
+                  "enum": [
+                    "text",
+                    "textarea",
+                    "multiplechoice",
+                    "checkbox",
+                    "dropdown",
+                    "rating",
+                    "date",
+                    "email",
+                    "number",
+                    "file",
+                    "boolean"
+                  ]
                 },
                 "text": {
                   "type": "string",
@@ -170,7 +182,14 @@
                     },
                     "condition": {
                       "type": "string",
-                      "enum": ["equals", "notEquals", "contains", "notContains", "greaterThan", "lessThan"]
+                      "enum": [
+                        "equals",
+                        "notEquals",
+                        "contains",
+                        "notContains",
+                        "greaterThan",
+                        "lessThan"
+                      ]
                     },
                     "value": {
                       "type": "string",
@@ -246,5 +265,15 @@
       }
     }
   },
-  "required": ["surveyId", "title", "description", "createdBy", "createdAt", "status", "settings", "sections", "audience"]
-} 
+  "required": [
+    "surveyId",
+    "title",
+    "description",
+    "createdBy",
+    "createdAt",
+    "status",
+    "settings",
+    "sections",
+    "audience"
+  ]
+}
