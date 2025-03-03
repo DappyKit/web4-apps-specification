@@ -33,10 +33,20 @@ The project includes a robust input data validation system that provides flexibl
 The validation system converts JSON Schema definitions to Zod validation schemas, providing type-safe, runtime validation with detailed error messages. The main functionality is exposed through:
 
 ```typescript
-validateInputData(data: unknown, schemaPath: string): boolean
+validateInputData(options: { data: unknown; schema: JsonSchema }): boolean
 ```
 
-This function validates input data against a schema defined in a JSON file and returns `true` if valid or throws a detailed error if invalid.
+This function validates input data against a provided JSON schema and returns `true` if valid or throws a detailed error if invalid. The implementation is browser-compatible and has no Node.js dependencies.
+
+For Node.js environments, additional utility functions are provided in `schema-utils.ts`:
+
+```typescript
+// Load a schema from a file path
+loadSchemaFromPath(schemaPath: string): JsonSchema
+
+// Validate data using a schema file path (for backward compatibility)
+validateInputDataFromPath(data: unknown, schemaPath: string): boolean
+```
 
 ### Available Schemas
 
@@ -55,14 +65,56 @@ The system includes a variety of predefined schemas for common data structures:
 
 ### Example Usage
 
-Testing schema validation is straightforward:
+#### Browser Environment
+
+```typescript
+import { validateInputData, JsonSchema } from './input-data/input-validation';
+
+// Schema definition (could be loaded from an API or static JSON)
+const schema: JsonSchema = {
+  type: "object",
+  properties: {
+    id: {
+      type: "string",
+      pattern: "^TODO-\\d{4}$"
+    },
+    title: {
+      type: "string",
+      minLength: 3,
+      maxLength: 100
+    },
+    completed: {
+      type: "boolean"
+    }
+  },
+  required: ["id", "title", "completed"]
+};
+
+// Sample data
+const todoData = {
+  "id": "TODO-0001",
+  "title": "Complete project documentation",
+  "completed": false
+};
+
+try {
+  const isValid = validateInputData({ data: todoData, schema });
+  console.log('Validation successful:', isValid);
+} catch (error) {
+  console.error('Validation failed:', error.errors);
+}
+```
+
+#### Node.js Environment
 
 ```typescript
 import { validateInputData } from './input-data/input-validation';
+import { loadSchemaFromPath, validateInputDataFromPath } from './input-data/schema-utils';
 import path from 'path';
 
-// Path to schema definition
+// Method 1: Using schema utils to load from file, then validate
 const schemaPath = path.join(__dirname, 'input-data', 'schemas', 'todo.json');
+const schema = loadSchemaFromPath(schemaPath);
 
 // Sample data
 const todoData = {
@@ -76,8 +128,13 @@ const todoData = {
 };
 
 try {
-  const isValid = validateInputData(todoData, schemaPath);
+  // Option 1: Load schema separately and validate
+  const isValid = validateInputData({ data: todoData, schema });
   console.log('Validation successful:', isValid);
+  
+  // Option 2: Use the shorthand utility (for backward compatibility)
+  const isAlsoValid = validateInputDataFromPath(todoData, schemaPath);
+  console.log('Validation with path also successful:', isAlsoValid);
 } catch (error) {
   console.error('Validation failed:', error.errors);
 }

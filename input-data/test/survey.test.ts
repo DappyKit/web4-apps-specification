@@ -1,15 +1,17 @@
 import { validateInputData } from '../input-validation'
+import { loadSchemaFromPath, validateInputDataFromPath } from '../schema-utils'
 import path from 'path'
 import fs from 'fs'
 
 describe('Survey Validation', () => {
   const schemaPath = path.join(__dirname, '..', 'schemas', 'survey.json')
+  const schemaJson = loadSchemaFromPath(schemaPath)
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'survey-correct.json'), 'utf-8')
   )
 
   test('should return true for valid data', () => {
-    const result = validateInputData(correctData, schemaPath)
+    const result = validateInputData({ data: correctData, schema: schemaJson })
     expect(result).toBe(true)
   })
 
@@ -25,7 +27,7 @@ describe('Survey Validation', () => {
       sections: correctData.sections,
       // audience is missing
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid surveyId pattern', () => {
@@ -33,7 +35,7 @@ describe('Survey Validation', () => {
       ...correctData,
       surveyId: 'SURVEY-123', // Doesn't match the required pattern
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for title too short', () => {
@@ -41,7 +43,7 @@ describe('Survey Validation', () => {
       ...correctData,
       title: 'Poll', // Less than 5 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for description too short', () => {
@@ -49,7 +51,7 @@ describe('Survey Validation', () => {
       ...correctData,
       description: 'A survey', // Less than 10 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid email in createdBy', () => {
@@ -57,7 +59,7 @@ describe('Survey Validation', () => {
       ...correctData,
       createdBy: 'not-an-email', // Invalid email format
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid status', () => {
@@ -65,7 +67,7 @@ describe('Survey Validation', () => {
       ...correctData,
       status: 'running', // Not in the enum
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required settings fields', () => {
@@ -77,7 +79,7 @@ describe('Survey Validation', () => {
         // allowMultipleSubmissions is missing
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid redirectUrl format', () => {
@@ -88,7 +90,7 @@ describe('Survey Validation', () => {
         redirectUrl: 'not-a-valid-url',
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for empty sections array', () => {
@@ -96,7 +98,7 @@ describe('Survey Validation', () => {
       ...correctData,
       sections: [], // Should have at least 1 item
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required section fields', () => {
@@ -111,7 +113,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for empty questions array', () => {
@@ -124,7 +126,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required question fields', () => {
@@ -144,7 +146,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid question type', () => {
@@ -162,7 +164,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for question text too short', () => {
@@ -180,7 +182,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required option fields', () => {
@@ -203,7 +205,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid condition in conditionalLogic', () => {
@@ -225,7 +227,7 @@ describe('Survey Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid audience type', () => {
@@ -236,7 +238,7 @@ describe('Survey Validation', () => {
         type: 'members', // Not in the enum
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for abandonRate over 100', () => {
@@ -247,7 +249,7 @@ describe('Survey Validation', () => {
         abandonRate: 120, // Should be maximum 100
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should accept data with missing optional fields', () => {
@@ -266,7 +268,7 @@ describe('Survey Validation', () => {
       },
       // expiresAt, statistics, and tags are missing but optional
     }
-    const result = validateInputData(validData, schemaPath)
+    const result = validateInputData({ data: validData, schema: schemaJson })
     expect(result).toBe(true)
   })
 })

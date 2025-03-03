@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import fs from 'fs'
-import path from 'path'
 
-type JsonSchema = {
+/**
+ * Represents a JSON Schema structure
+ */
+export type JsonSchema = {
   type: string
   format?: string
   minLength?: number
@@ -139,25 +140,16 @@ const convertJsonSchemaToZod = (schema: JsonSchema): z.ZodTypeAny => {
 }
 
 /**
- * Reads and parses JSON schema file
- * @param schemaPath - Path to the schema file
- * @returns Zod schema
- */
-export const loadSchema = (schemaPath: string): z.ZodType => {
-  const schemaContent = fs.readFileSync(schemaPath, 'utf-8')
-  const schemaJson = JSON.parse(schemaContent) as JsonSchema
-  return convertJsonSchemaToZod(schemaJson)
-}
-
-/**
  * Validates input data against the provided schema
- * @param data - Data to validate
- * @param schemaPath - Path to the schema file
+ * @param options - Object containing data and schema
+ * @param options.data - Data to validate
+ * @param options.schema - JSON schema object to validate against
  * @returns true if validation passes
  * @throws ZodError if validation fails
  */
-export const validateInputData = (data: unknown, schemaPath: string): boolean => {
-  const schema = loadSchema(schemaPath)
-  schema.parse(data)
+export const validateInputData = (options: { data: unknown; schema: JsonSchema }): boolean => {
+  const { data, schema } = options
+  const zodSchema = convertJsonSchemaToZod(schema)
+  zodSchema.parse(data)
   return true
 }

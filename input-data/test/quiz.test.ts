@@ -1,15 +1,17 @@
 import { validateInputData } from '../input-validation'
+import { loadSchemaFromPath, validateInputDataFromPath } from '../schema-utils'
 import path from 'path'
 import fs from 'fs'
 
 describe('Quiz Validation', () => {
   const schemaPath = path.join(__dirname, '..', 'schemas', 'quiz.json')
+  const schemaJson = loadSchemaFromPath(schemaPath)
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'quiz-correct.json'), 'utf-8')
   )
 
   test('should return true for valid data', () => {
-    const result = validateInputData(correctData, schemaPath)
+    const result = validateInputData({ data: correctData, schema: schemaJson })
     expect(result).toBe(true)
   })
 
@@ -18,7 +20,7 @@ describe('Quiz Validation', () => {
       name: 'Test Quiz',
       questions: [],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too short name', () => {
@@ -26,7 +28,7 @@ describe('Quiz Validation', () => {
       ...correctData,
       name: 'ab',
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too long description', () => {
@@ -34,7 +36,7 @@ describe('Quiz Validation', () => {
       ...correctData,
       description: 'This description is way too long and exceeds twenty characters',
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too short question text', () => {
@@ -47,7 +49,7 @@ describe('Quiz Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too few options', () => {
@@ -60,7 +62,7 @@ describe('Quiz Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too many options', () => {
@@ -73,7 +75,7 @@ describe('Quiz Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too short option', () => {
@@ -86,6 +88,6 @@ describe('Quiz Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 })

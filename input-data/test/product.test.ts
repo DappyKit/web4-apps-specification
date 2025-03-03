@@ -1,15 +1,17 @@
 import { validateInputData } from '../input-validation'
+import { loadSchemaFromPath, validateInputDataFromPath } from '../schema-utils'
 import path from 'path'
 import fs from 'fs'
 
 describe('Product Validation', () => {
   const schemaPath = path.join(__dirname, '..', 'schemas', 'product.json')
+  const schemaJson = loadSchemaFromPath(schemaPath)
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'product-correct.json'), 'utf-8')
   )
 
   test('should return true for valid data', () => {
-    const result = validateInputData(correctData, schemaPath)
+    const result = validateInputData({ data: correctData, schema: schemaJson })
     expect(result).toBe(true)
   })
 
@@ -22,7 +24,7 @@ describe('Product Validation', () => {
       // images is missing
       stock: 42,
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid productId pattern', () => {
@@ -30,7 +32,7 @@ describe('Product Validation', () => {
       ...correctData,
       productId: 'PRODUCT-123', // Doesn't match the required pattern
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too short product name', () => {
@@ -38,7 +40,7 @@ describe('Product Validation', () => {
       ...correctData,
       name: 'HP', // Less than 3 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative price', () => {
@@ -46,7 +48,7 @@ describe('Product Validation', () => {
       ...correctData,
       price: -10.99,
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid category', () => {
@@ -54,7 +56,7 @@ describe('Product Validation', () => {
       ...correctData,
       category: 'toys', // Not in the enum
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for empty images array', () => {
@@ -62,7 +64,7 @@ describe('Product Validation', () => {
       ...correctData,
       images: [],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required image fields', () => {
@@ -76,7 +78,7 @@ describe('Product Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid URL format', () => {
@@ -90,7 +92,7 @@ describe('Product Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative stock', () => {
@@ -98,7 +100,7 @@ describe('Product Validation', () => {
       ...correctData,
       stock: -5,
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid dimensions', () => {
@@ -112,7 +114,7 @@ describe('Product Validation', () => {
         },
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should accept data with missing optional fields', () => {
@@ -130,7 +132,7 @@ describe('Product Validation', () => {
       stock: 42,
       // description, specifications, tags, and ratings are missing but optional
     }
-    const result = validateInputData(validData, schemaPath)
+    const result = validateInputData({ data: validData, schema: schemaJson })
     expect(result).toBe(true)
   })
 })

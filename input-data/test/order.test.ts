@@ -1,15 +1,17 @@
 import { validateInputData } from '../input-validation'
+import { loadSchemaFromPath, validateInputDataFromPath } from '../schema-utils'
 import path from 'path'
 import fs from 'fs'
 
 describe('Order Validation', () => {
   const schemaPath = path.join(__dirname, '..', 'schemas', 'order.json')
+  const schemaJson = loadSchemaFromPath(schemaPath)
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'order-correct.json'), 'utf-8')
   )
 
   test('should return true for valid data', () => {
-    const result = validateInputData(correctData, schemaPath)
+    const result = validateInputData({ data: correctData, schema: schemaJson })
     expect(result).toBe(true)
   })
 
@@ -24,7 +26,7 @@ describe('Order Validation', () => {
       payment: correctData.payment,
       // totals is missing
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid orderId pattern', () => {
@@ -32,7 +34,7 @@ describe('Order Validation', () => {
       ...correctData,
       orderId: 'ORDER-12345', // Doesn't match the required pattern
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for too short customerId', () => {
@@ -40,7 +42,7 @@ describe('Order Validation', () => {
       ...correctData,
       customerId: 'CU', // Less than 5 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid status value', () => {
@@ -48,7 +50,7 @@ describe('Order Validation', () => {
       ...correctData,
       status: 'returning', // Not in the enum
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for empty items array', () => {
@@ -56,7 +58,7 @@ describe('Order Validation', () => {
       ...correctData,
       items: [],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative quantity', () => {
@@ -69,7 +71,7 @@ describe('Order Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative price', () => {
@@ -82,7 +84,7 @@ describe('Order Validation', () => {
         },
       ],
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for missing required shipping address fields', () => {
@@ -99,7 +101,7 @@ describe('Order Validation', () => {
         },
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid shipping method', () => {
@@ -110,7 +112,7 @@ describe('Order Validation', () => {
         method: 'priority', // Not in the enum
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative shipping cost', () => {
@@ -121,7 +123,7 @@ describe('Order Validation', () => {
         cost: -5.99,
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid payment method', () => {
@@ -132,7 +134,7 @@ describe('Order Validation', () => {
         method: 'gift_card', // Not in the enum
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid payment status', () => {
@@ -143,7 +145,7 @@ describe('Order Validation', () => {
         status: 'processing', // Not in the enum for payment status
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for negative total values', () => {
@@ -154,7 +156,7 @@ describe('Order Validation', () => {
         tax: -5.5,
       },
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should accept data with missing optional fields', () => {
@@ -169,7 +171,7 @@ describe('Order Validation', () => {
       totals: correctData.totals,
       // notes is missing but optional
     }
-    const result = validateInputData(validData, schemaPath)
+    const result = validateInputData({ data: validData, schema: schemaJson })
     expect(result).toBe(true)
   })
 })

@@ -1,15 +1,17 @@
 import { validateInputData } from '../input-validation'
+import { loadSchemaFromPath, validateInputDataFromPath } from '../schema-utils'
 import path from 'path'
 import fs from 'fs'
 
 describe('Todo Validation', () => {
   const schemaPath = path.join(__dirname, '..', 'schemas', 'todo.json')
+  const schemaJson = loadSchemaFromPath(schemaPath)
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'todo-correct.json'), 'utf-8')
   )
 
   test('should return true for valid data', () => {
-    const result = validateInputData(correctData, schemaPath)
+    const result = validateInputData({ data: correctData, schema: schemaJson })
     expect(result).toBe(true)
   })
 
@@ -21,7 +23,7 @@ describe('Todo Validation', () => {
       // priority is missing
       completed: false,
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid id pattern', () => {
@@ -29,7 +31,7 @@ describe('Todo Validation', () => {
       ...correctData,
       id: 'TASK-0001', // Doesn't match the required pattern
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for title too short', () => {
@@ -37,7 +39,7 @@ describe('Todo Validation', () => {
       ...correctData,
       title: 'Do', // Less than 3 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for title too long', () => {
@@ -45,7 +47,7 @@ describe('Todo Validation', () => {
       ...correctData,
       title: 'A'.repeat(101), // More than 100 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for description too long', () => {
@@ -53,7 +55,7 @@ describe('Todo Validation', () => {
       ...correctData,
       description: 'A'.repeat(501), // More than 500 characters
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid status', () => {
@@ -61,7 +63,7 @@ describe('Todo Validation', () => {
       ...correctData,
       status: 'started', // Not in the enum
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid priority', () => {
@@ -69,7 +71,7 @@ describe('Todo Validation', () => {
       ...correctData,
       priority: 'critical', // Not in the enum
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for non-boolean completed', () => {
@@ -77,7 +79,7 @@ describe('Todo Validation', () => {
       ...correctData,
       completed: 'yes', // Not a boolean
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should throw error for invalid dueDate format', () => {
@@ -85,7 +87,7 @@ describe('Todo Validation', () => {
       ...correctData,
       dueDate: 'tomorrow', // Invalid date format
     }
-    expect(() => validateInputData(invalidData, schemaPath)).toThrow()
+    expect(() => validateInputData({ data: invalidData, schema: schemaJson })).toThrow()
   })
 
   test('should accept data with missing optional fields', () => {
@@ -97,7 +99,7 @@ describe('Todo Validation', () => {
       completed: false,
       // description and dueDate are missing but optional
     }
-    const result = validateInputData(validData, schemaPath)
+    const result = validateInputData({ data: validData, schema: schemaJson })
     expect(result).toBe(true)
   })
 })
