@@ -7,9 +7,19 @@ describe('validateInputData', () => {
   const correctData = JSON.parse(
     fs.readFileSync(path.join(__dirname, 'data', 'quiz-correct.json'), 'utf-8')
   );
-  const incorrectData = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'data', 'quiz-incorrect.json'), 'utf-8')
-  );
+
+  const incorrectData = [
+    'A',
+    'B',
+    'This is a very long string that exceeds twenty characters limit',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Item 9',
+    'Item 10'
+  ];
 
   test('should return true for valid data', () => {
     const result = validateInputData(correctData, schemaPath);
