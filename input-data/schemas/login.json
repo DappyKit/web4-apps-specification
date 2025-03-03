@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "minLength": 5,
+      "maxLength": 50
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 30
+    },
+    "isRemember": {
+      "type": "boolean"
+    }
+  },
+  "required": ["email", "password", "isRemember"]
+} 
