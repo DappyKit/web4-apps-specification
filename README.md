@@ -24,6 +24,63 @@ npm test
 ```
 This will compile and run `test.js` (which imports `validate.ts`), showing whether each scenario passed or failed.
 
+## Development
+
+### Running Tests
+
+You can run the tests by installing TypeScript and dependencies locally in your project, then execute:
+```bash
+npm ci
+npm run test:all
+```
+
+This will run both Web4 tests and input schema validation tests, showing whether each scenario passed or failed.
+
+### Code Quality Tools
+
+This project uses several tools to maintain code quality and consistency:
+
+#### Prettier
+For code formatting:
+```bash
+# Check formatting
+npm run format:check
+
+# Fix formatting issues
+npm run format
+```
+
+#### ESLint
+For code linting:
+```bash
+# Check linting
+npm run lint:check
+
+# Fix linting issues
+npm run lint
+```
+
+#### TypeScript
+For type checking:
+```bash
+# Run type checking
+npx tsc --noEmit
+```
+
+### Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The following checks run automatically:
+
+- **On Pull Requests to main branch**:
+  - Linting and formatting checks
+  - Type checking
+  - All tests (with multiple Node.js versions)
+
+- **On Push to main branch**:
+  - Same checks as pull requests
+
+For more details, see the [GitHub Actions workflows](.github/workflows/README.md).
+
 ## Web4 structure
 
 ```typescript

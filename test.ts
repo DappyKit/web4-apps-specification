@@ -191,9 +191,9 @@ async function runTests() {
 
   try {
     await validateWeb4AppData(partialCryptoIntegration)
-    logTestResult('Missing \'actions\' in cryptoIntegration (should fail)')
+    logTestResult("Missing 'actions' in cryptoIntegration (should fail)")
   } catch (error) {
-    logTestResult('Missing \'actions\' in cryptoIntegration (should fail)', undefined)
+    logTestResult("Missing 'actions' in cryptoIntegration (should fail)", undefined)
   }
 }
 
