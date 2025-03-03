@@ -1,0 +1,19 @@
+{
+  "username": "johndoe42",
+  "fullName": "John Doe",
+  "age": 28,
+  "bio": "Software developer with a passion for creating intuitive user experiences.",
+  "location": {
+    "country": "United States",
+    "city": "Seattle"
+  },
+  "interests": [
+    "programming",
+    "hiking",
+    "photography"
+  ],
+  "privacySettings": {
+    "profileVisibility": "friends",
+    "showAge": true
+  }
+} 

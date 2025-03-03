@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 20
+    },
+    "fullName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 50
+    },
+    "age": {
+      "type": "number",
+      "minimum": 13,
+      "maximum": 120
+    },
+    "bio": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50
+        },
+        "city": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50
+        }
+      },
+      "required": ["country"]
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 30
+      },
+      "minItems": 1,
+      "maxItems": 5
+    },
+    "privacySettings": {
+      "type": "object",
+      "properties": {
+        "profileVisibility": {
+          "type": "string",
+          "enum": ["public", "friends", "private"]
+        },
+        "showAge": {
+          "type": "boolean"
+        }
+      },
+      "required": ["profileVisibility", "showAge"]
+    }
+  },
+  "required": ["username", "fullName", "age", "privacySettings"]
+} 

@@ -9,6 +9,9 @@ type JsonSchema = {
   maxLength?: number;
   minItems?: number;
   maxItems?: number;
+  minimum?: number;
+  maximum?: number;
+  enum?: string[];
   properties?: Record<string, JsonSchema>;
   items?: JsonSchema;
   required?: string[];
@@ -19,7 +22,11 @@ type JsonSchema = {
  * @param schema - JSON Schema string definition
  * @returns Zod string schema with applied constraints
  */
-const createStringSchema = (schema: JsonSchema): z.ZodString => {
+const createStringSchema = (schema: JsonSchema): z.ZodTypeAny => {
+  if (schema.enum) {
+    return z.enum(schema.enum as [string, ...string[]]);
+  }
+  
   let zodSchema = z.string();
   
   if (schema.minLength !== undefined) {
@@ -30,6 +37,24 @@ const createStringSchema = (schema: JsonSchema): z.ZodString => {
   }
   if (schema.format === 'email') {
     zodSchema = zodSchema.email();
+  }
+  
+  return zodSchema;
+};
+
+/**
+ * Converts JSON Schema number constraints to Zod schema
+ * @param schema - JSON Schema number definition
+ * @returns Zod number schema with applied constraints
+ */
+const createNumberSchema = (schema: JsonSchema): z.ZodNumber => {
+  let zodSchema = z.number();
+  
+  if (schema.minimum !== undefined) {
+    zodSchema = zodSchema.min(schema.minimum);
+  }
+  if (schema.maximum !== undefined) {
+    zodSchema = zodSchema.max(schema.maximum);
   }
   
   return zodSchema;
@@ -68,18 +93,17 @@ const createObjectSchema = (schema: JsonSchema): z.ZodObject<any> => {
   const shape: Record<string, z.ZodTypeAny> = {};
   
   if (schema.properties) {
+    const requiredFields = schema.required || [];
+    
     for (const [key, propSchema] of Object.entries(schema.properties)) {
-      shape[key] = convertJsonSchemaToZod(propSchema);
+      const fieldSchema = convertJsonSchemaToZod(propSchema);
+      
+      // Make field optional if it's not in the required array
+      shape[key] = requiredFields.includes(key) ? fieldSchema : fieldSchema.optional();
     }
   }
   
-  let zodSchema = z.object(shape);
-  
-  if (schema.required?.length) {
-    zodSchema = zodSchema.required();
-  }
-  
-  return zodSchema;
+  return z.object(shape);
 };
 
 /**
@@ -97,6 +121,8 @@ const convertJsonSchemaToZod = (schema: JsonSchema): z.ZodTypeAny => {
       return createObjectSchema(schema);
     case 'boolean':
       return z.boolean();
+    case 'number':
+      return createNumberSchema(schema);
     default:
       throw new Error(`Unsupported schema type: ${schema.type}`);
   }
