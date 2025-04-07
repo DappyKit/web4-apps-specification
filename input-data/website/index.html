@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Schema Validator</title>
+  <!-- Shadcn / Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shadcn/ui@0.0.4/dist/shadcn-ui.min.css">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col">
+  <div class="container mx-auto p-4 sm:p-6 max-w-6xl">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">JSON Schema Validator</h1>
+      <p class="text-slate-600 dark:text-slate-400">Validate your JSON data against a schema</p>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Schema</h2>
+          <button id="loadSchemaBtn" class="px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            Load Quiz Schema
+          </button>
+        </div>
+        <div class="relative">
+          <textarea 
+            id="schemaInput" 
+            class="w-full h-[400px] px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Paste your JSON schema here..."
+          ></textarea>
+        </div>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Data</h2>
+          <button id="loadDataBtn" class="px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            Load Quiz Data
+          </button>
+        </div>
+        <div class="relative">
+          <textarea 
+            id="dataInput" 
+            class="w-full h-[400px] px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Paste your JSON data here..."
+          ></textarea>
+        </div>
+      </div>
+    </main>
+
+    <div class="flex justify-center mt-8 mb-4">
+      <button 
+        id="validateBtn" 
+        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow transition-colors"
+      >
+        Validate
+      </button>
+    </div>
+
+    <div id="resultContainer" class="mt-4 p-4 rounded-lg border border-transparent hidden">
+      <p id="resultMessage" class="text-center"></p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="bundle.js"></script>
+</body>
+</html> 

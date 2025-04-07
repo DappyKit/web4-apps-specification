@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["dom", "es6", "dom.iterable", "scripthost"],
+    "sourceMap": true,
+    "outDir": "../../dist/input-data/website",
+    "rootDir": "../",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./**/*.ts", "../input-validation.ts"],
+  "exclude": ["node_modules", "test"]
+}

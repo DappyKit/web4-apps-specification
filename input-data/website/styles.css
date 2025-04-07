@@ -1,0 +1,41 @@
+/* Custom styles for the JSON Validator app */
+
+.success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: rgb(34, 197, 94);
+  color: rgb(21, 128, 61);
+}
+
+.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgb(239, 68, 68);
+  color: rgb(185, 28, 28);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  textarea {
+    height: 250px !important;
+  }
+}
+
+/* JSON syntax highlighting helper */
+.json-key {
+  color: #2563eb;
+}
+
+.json-string {
+  color: #16a34a;
+}
+
+.json-number {
+  color: #9333ea;
+}
+
+.json-boolean {
+  color: #c2410c;
+}
+
+.json-null {
+  color: #78716c;
+} 
