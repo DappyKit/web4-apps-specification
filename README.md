@@ -6,6 +6,7 @@ The core idea of the Web4 application standard is to abstract away from specific
 
 This format supports both regular web applications and also [Frames v2](https://docs.farcaster.xyz/developers/frames/v2/) from Farcaster.
 
+You can try validating input data schemas online at [https://web4-apps-specification.vercel.app/](https://web4-apps-specification.vercel.app/)
 
 ## Validator
 

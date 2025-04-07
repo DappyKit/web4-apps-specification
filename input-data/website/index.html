@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col">
-  <div class="container mx-auto p-4 sm:p-6 max-w-6xl">
+  <div class="container mx-auto p-4 sm:p-6 max-w-6xl flex-grow">
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">JSON Schema Validator</h1>
       <p class="text-slate-600 dark:text-slate-400">Validate your JSON data against a schema</p>
@@ -64,6 +64,17 @@
       <p id="resultMessage" class="text-center"></p>
     </div>
   </div>
+
+  <footer class="bg-gray-200 dark:bg-gray-800 py-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p class="text-gray-700 dark:text-gray-300">
+        View source code on 
+        <a href="https://github.com/DappyKit/web4-apps-specification" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </p>
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="bundle.js"></script>

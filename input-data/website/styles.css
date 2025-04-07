@@ -19,6 +19,16 @@
   }
 }
 
+/* Footer styling */
+footer a {
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+footer a:hover {
+  opacity: 0.8;
+}
+
 /* JSON syntax highlighting helper */
 .json-key {
   color: #2563eb;
